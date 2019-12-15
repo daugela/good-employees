@@ -14,7 +14,8 @@ const EmployeeList = (props) => {
                         </Media>
                         <Media body>
                             <Media heading>{ singlePerson.firstName } { singlePerson.lastName }</Media>
-                            { singlePerson.title }
+                            { singlePerson.title } {"\n"}
+                            <span className="tw-handle">{ singlePerson.twitterId }</span>
                         </Media>
                     </Media>
                     </ListGroupItem>

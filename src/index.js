@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-//import App from './App';
+
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
+import "./assets/styles/styles.css";
 
 //Redux store with initialisation
 import { Provider } from "react-redux";

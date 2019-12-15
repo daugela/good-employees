@@ -1,0 +1,38 @@
+/* 
+  Just few style overrides on top of reactstrap
+  Just to follow given design example
+*/
+
+img {
+  border-radius: 50%;
+}
+
+.media-left {
+  margin-right: 2%;
+}
+
+.sticky-top {
+  border: 1px solid rgb(228, 228, 228);
+}
+
+.list-group-item:first-child {
+  border-top-left-radius: 0!important;
+  border-top-right-radius: 0!important;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.navbar-brand{
+  margin: auto!important;
+}
+
+.media-body{
+  white-space: pre-line;
+}
+
+.tw-handle{
+  color:#82ccf8;
+}

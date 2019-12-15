@@ -4,7 +4,7 @@ import { Navbar, NavbarBrand } from "reactstrap";
 const Header = (props) => {
   return (
     <Navbar color="light" light expand="md" sticky="top">
-        <NavbarBrand>Employee Directory</NavbarBrand>
+      <NavbarBrand>{ props.title }</NavbarBrand>
     </Navbar>
   );
 };

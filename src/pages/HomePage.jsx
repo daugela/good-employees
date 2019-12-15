@@ -26,7 +26,7 @@ class HomePage extends React.Component {
         return (
             <Container>
 
-                <Header/>
+                <Header title="Employee directory"/>
                 <EmployeeList employees={ this.props.employees }/>
 
             </Container>
