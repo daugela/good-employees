@@ -2,9 +2,9 @@ import { CACHED_DIRECTORY } from '../_constants';
 import { FETCH_EMPLOYEES_START, FETCH_EMPLOYEES_SUCCESS, FETCH_EMPLOYEES_ERROR } from '../_constants';
 
 const initialState = {
-    loading: false,
+    loading: true,
     error: null,
-    employees: []
+    directory: []
 };
 
 function directoryReducer(state=initialState, action) {
@@ -25,7 +25,7 @@ function directoryReducer(state=initialState, action) {
             return {
                 ...state,
                 loading: false,
-                employees: action.data // Add employees to redux state :)
+                directory: action.data // Add employees to redux state :)
             };
 
         case FETCH_EMPLOYEES_ERROR:

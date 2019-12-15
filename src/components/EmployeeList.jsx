@@ -7,9 +7,9 @@ const EmployeeList = (props) => {
         <ListGroup>
             {props.employees && props.employees.length ? props.employees.map((singlePerson, index) => {
 
-                return <ListGroupItem key={`metal-${singlePerson.id}`}>
+                return <ListGroupItem key={`employee-${ singlePerson.id }`} onClick={ props.handler }>
                         <Media>
-                        <Media left href="#">
+                        <Media left>
                             <Media object src={ singlePerson.pic } alt="{ singlePerson.firstName }" />
                         </Media>
                         <Media body>
@@ -20,7 +20,7 @@ const EmployeeList = (props) => {
                     </Media>
                     </ListGroupItem>
 
-            }) : <ListGroupItem>No people.., Nervous yay ~?!?</ListGroupItem>}
+            }) : <ListGroupItem>No people?.., Nervous yay ~?</ListGroupItem>}
         </ListGroup>
         </>
     );
