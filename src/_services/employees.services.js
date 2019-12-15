@@ -11,7 +11,7 @@ async function fetchDirectory() {
         headers: AUTH_HEADER
     };
 
-    const res = await fetch("http://46.101.202.234/api/employees/", requestOptions);
+    const res = await fetch(process.env.REACT_APP_EMPLOYEE_API, requestOptions);
     if (res.status < 500) {
         return res.json().then(data => {
             return { status: res.status, data };
@@ -29,7 +29,7 @@ async function updateTitle(id, title) {
         body: JSON.stringify({ id: id, title: title })
     };
 
-    const res = await fetch("http://46.101.202.234/api/employees/", requestOptions);
+    const res = await fetch(process.env.REACT_APP_EMPLOYEE_API, requestOptions);
     if (res.status < 500) {
         return res.json().then(data => {
             console.log(data);
