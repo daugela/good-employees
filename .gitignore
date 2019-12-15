@@ -21,6 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-
-Andriuss-MacBook-Pro:good-employees andriusdaugela$ git commit -m "Populate project with proper structure; Add dependencies; Add employee images; Delete defaults; Implement basic routing and redux"

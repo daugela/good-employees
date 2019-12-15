@@ -1,54 +1,52 @@
 import React from "react";
-import { Container, ListGroup, ListGroupItem, Media, ListGroupItemHeading, ListGroupItemText } from "reactstrap";
+import { Container } from "reactstrap";
+
 import Header from "../components/Header.jsx";
-import amy from "../assets/Amy_Jones.jpg";
+import EmployeeList from "../components/EmployeeList.jsx"
+
+import { directoryActions } from "../_actions";
+import { connect } from "react-redux";
+
 
 class HomePage extends React.Component {
 
-  componentDidMount() {
-  }
+    constructor(props){
+        super(props);
 
-  render() {
-    return (
-        <Container>
-            <Header/>
-            <ListGroup>
-            <ListGroupItem>
-                <Media>
-                    <Media left href="#">
-                        <Media object src={ amy } alt="Amy" />
-                    </Media>
-                    <Media body>
-                        <Media heading>Amy1</Media>
-                         Some text
-                    </Media>
-                </Media>
-            </ListGroupItem>
-            <ListGroupItem>
-                <Media>
-                    <Media left href="#">
-                        <Media object src={ amy } alt="Amy" />
-                    </Media>
-                    <Media body>
-                        <Media heading>Amy2</Media>
-                         Some text
-                    </Media>
-                </Media>
-            </ListGroupItem>
-            <ListGroupItem>
-                <Media>
-                    <Media left href="#">
-                        <Media object src={ amy } alt="Amy" />
-                    </Media>
-                    <Media body>
-                        <Media heading>Amy3</Media>
-                         Some text
-                    </Media>
-                </Media>
-            </ListGroupItem>
-        </ListGroup>
-      </Container>
-    );
-  }
+        this.state = {
+            employees: []
+        };
+    }
+
+    componentDidMount() {
+        this.props.fetchEmployees();
+    }
+
+    render() {
+        return (
+            <Container>
+
+                <Header/>
+                <EmployeeList employees={ this.props.employees }/>
+
+            </Container>
+        );
+    }
 }
-export default HomePage;
+
+const mapStateToProps = (redux_state) => {
+    return {
+        error: redux_state.error,
+        employees: redux_state.directoryReducer.employees,
+        loading: redux_state.loading
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchEmployees: () => dispatch(directoryActions.fetchDirectory()),
+        updateTitle: (employeeId, newTitle) => dispatch(directoryActions.updateTitle(employeeId, newTitle)).then(dispatch(directoryActions.fetchDirectory()))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import employeesReducer from "./employees.reducer";
+import directoryReducer from "./directory.reducer";
 import authReducer from "./auth.reducer";
 
 const rootReducer = combineReducers({
-  authReducer, employeesReducer
+  authReducer, directoryReducer
 });
 
 export default rootReducer;
