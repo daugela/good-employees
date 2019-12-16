@@ -1,10 +1,16 @@
 import { CACHED_DIRECTORY } from '../_constants';
-import { FETCH_EMPLOYEES_START, FETCH_EMPLOYEES_SUCCESS, FETCH_EMPLOYEES_ERROR } from '../_constants';
+import {
+    FETCH_EMPLOYEES_START,
+    FETCH_EMPLOYEES_SUCCESS,
+    FETCH_EMPLOYEES_ERROR,
+    INCREASE_OPEN_TABS,
+    DECREASE_OPEN_TABS } from '../_constants';
 
 const initialState = {
     loading: true,
     error: null,
-    directory: []
+    directory: [],
+    tabs: 0
 };
 
 function directoryReducer(state=initialState, action) {
@@ -34,6 +40,18 @@ function directoryReducer(state=initialState, action) {
                 ...state,
                 loading: false,
                 error: action.error
+            };
+        
+        case INCREASE_OPEN_TABS:
+            return {
+                ...state,
+                tabs: state.tabs + 1
+            };
+
+        case DECREASE_OPEN_TABS:
+            return {
+                ...state,
+                tabs: state.tabs - 1 
             };
 
         default:
