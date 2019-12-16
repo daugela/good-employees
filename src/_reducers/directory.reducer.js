@@ -4,13 +4,15 @@ import {
     FETCH_EMPLOYEES_SUCCESS,
     FETCH_EMPLOYEES_ERROR,
     INCREASE_OPEN_TABS,
-    DECREASE_OPEN_TABS } from '../_constants';
+    DECREASE_OPEN_TABS,
+    SELECT_EMPLOYEE } from '../_constants';
 
 const initialState = {
     loading: true,
     error: null,
     directory: [],
-    tabs: 0
+    tabs: 0,
+    employeeId: 9
 };
 
 function directoryReducer(state=initialState, action) {
@@ -43,17 +45,37 @@ function directoryReducer(state=initialState, action) {
             };
         
         case INCREASE_OPEN_TABS:
-            return {
-                ...state,
-                tabs: state.tabs + 1
-            };
+            // Do some sanity checks on tab count..
+            if(state.tabs > parseInt(process.env.REACT_APP_MAX_TABS)){
+                return {
+                    ...state,
+                    tabs: parseInt(process.env.REACT_APP_MAX_TABS)
+                };
+            }else{
+                return {
+                    ...state,
+                    tabs: state.tabs + 1
+                };
+            }
 
         case DECREASE_OPEN_TABS:
-            return {
-                ...state,
-                tabs: state.tabs - 1 
-            };
+            if(state.tabs < 1){
+                return {
+                    ...state,
+                    tabs: 0
+                };
+            }else{
+                return {
+                    ...state,
+                    tabs: state.tabs - 1 
+                };
+            }
 
+        case SELECT_EMPLOYEE:
+                return {
+                    ...state,
+                    employeeId: parseInt(action.id)
+                };
         default:
             return state;
   }

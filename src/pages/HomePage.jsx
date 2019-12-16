@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx";
 import Loader from "../components/Loader.jsx";
 import Search from "../components/Search.jsx";
 import EmployeeList from "../components/EmployeeList.jsx";
-import { INCREASE_OPEN_TABS } from "../_constants";
+import { INCREASE_OPEN_TABS, SELECT_EMPLOYEE } from "../_constants";
 import { directoryActions } from "../_actions";
 import { connect } from "react-redux";
 
@@ -20,23 +20,28 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchEmployees().then(() => {
-            //console.log(this.state.filtered);
-            this.setState( {filtered: this.props.directory} );
+        this.props.fetchDirectory().then(() => {
+            this.setState({ filtered: this.props.directory });
         })
     }
 
-    employeeClick = (event, employeeId) => {
-        if(this.props.tabs < process.env.REACT_APP_MAX_TABS){
-            this.props.addTab();
-            window.open("/employee", "_blank");
+    employeeClick = (event) => {
+        // Do some sanity check on the attribute required
+        if(event.target.getAttribute("data-id").match(/^[0-9]+$/)){
+            this.props.selectEmployee(event.target.getAttribute("data-id"));
+            if(this.props.tabs < parseInt(process.env.REACT_APP_MAX_TABS)){
+                this.props.addTab();
+                window.open("/employee", "_blank");
+            }else{
+                // TODO: Make some ~nicer popup/modal in the future..
+                alert("Cannot open more than " + process.env.REACT_APP_MAX_TABS + " tabs!");
+            }
         }else{
-            alert("Cannot open more than " + process.env.REACT_APP_MAX_TABS + " tabs!");
+            console.error("Some bad entity was clicked...");
         }
     }
 
     filterSearch = (event) => {
-        console.log(event.target.value);
         if(!event.target.value || event.target.value === " " || event.target.value === ""){
             this.setState({ filtered: [...this.props.directory] });
         }else {
@@ -80,7 +85,8 @@ const mapStateToProps = (redux_state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchEmployees: () => dispatch(directoryActions.fetchDirectory()),
+        fetchDirectory: () => dispatch(directoryActions.fetchDirectory()),
+        selectEmployee: (id) => dispatch({ type: SELECT_EMPLOYEE, id }),
         addTab: () => dispatch({ type: INCREASE_OPEN_TABS })
     };
 };

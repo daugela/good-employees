@@ -32,7 +32,6 @@ async function updateTitle(id, title) {
     const res = await fetch(process.env.REACT_APP_EMPLOYEE_API, requestOptions);
     if (res.status < 500) {
         return res.json().then(data => {
-            console.log(data);
             return { status: res.status, data };
         });
     } else {

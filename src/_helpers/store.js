@@ -4,14 +4,13 @@ import { createStateSyncMiddleware } from "redux-state-sync";
 import thunk from "redux-thunk";
 import rootReducer from "../_reducers";
 
-//export const store = createStore(rootReducer, applyMiddleware(thunk));
-
 const config = {
     whitelist: [
         "FETCH_EMPLOYEES_START",
         "FETCH_EMPLOYEES_SUCCESS",
         "FETCH_EMPLOYEES_ERROR",
-        "DECREASE_OPEN_TABS"
+        "DECREASE_OPEN_TABS",
+        "SELECT_EMPLOYEE"
     ], // Synced actions
     channel: "employee_tabs",
     initiateWithState: false
