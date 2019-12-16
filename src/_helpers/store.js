@@ -7,7 +7,12 @@ import rootReducer from "../_reducers";
 //export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const config = {
-    whitelist: ["FETCH_EMPLOYEES_START",], // Synced actions
+    whitelist: [
+        "FETCH_EMPLOYEES_START",
+        "FETCH_EMPLOYEES_SUCCESS",
+        "FETCH_EMPLOYEES_ERROR",
+        "DECREASE_OPEN_TABS"
+    ], // Synced actions
     channel: "employee_tabs",
     initiateWithState: false
 };

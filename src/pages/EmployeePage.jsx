@@ -1,5 +1,11 @@
 import React from "react";
-import { Container, Card, ListGroup, ListGroupItem, Media, CardBody, CardTitle, CardSubtitle, CardText } from "reactstrap";
+import {
+    Container,Card,
+    ListGroup, ListGroupItem,
+    Media, CardBody, CardTitle,
+    CardSubtitle, CardText,
+    Button, Input, Row, Col
+} from "reactstrap";
 import Header from "../components/Header.jsx";
 import { DECREASE_OPEN_TABS } from "../_constants"
 import { directoryActions } from "../_actions";
@@ -12,9 +18,11 @@ class EmployeePage extends React.Component {
 
         this.state = {
             employeeId: this.props.employeeId,
-            newTitle: "Some new title"
+            newTitle: "Some new title",
+            editable: false
         };
         this.tabClose = this.tabClose.bind(this);
+        this.toggleEditable = this.toggleEditable.bind(this);
     }
 
     componentDidMount() {
@@ -35,29 +43,52 @@ class EmployeePage extends React.Component {
         return message;
     }
 
+    toggleEditable = () => {
+        this.setState((prevState) => ({
+            editable: !prevState.editable
+        }));
+        this.props.fetchEmployees(); //Call update from api
+    }
+
     render() {
         return (
             <Container>
                 <Header title="Employee"/>
                 <Card>
-                    <ListGroup>
-                        <ListGroupItem>
-                            <Media>
-                            <Media left>
-                                <Media object src="http://46.101.202.234/static/employees/Julie_Taylor.jpg" alt="{ singlePerson.firstName }" />
-                            </Media>
-                            <Media body>
-                                <Media heading>Amy Jones</Media>
-                                Office lady {"\n"}
-                                <span className="tw-handle">@handler</span>
-                            </Media>
-                        </Media>
-                        </ListGroupItem>
-                    </ListGroup>
                     <CardBody>
-                        <CardTitle onClick={ this.closeCurrent }>Amy Jones</CardTitle>
-                        <CardSubtitle>Subtitle</CardSubtitle>
-                        <CardText>Some quick example text content.</CardText>
+                        <Row>
+                            <Col></Col>
+                            <Col>
+                                <ListGroup>
+                                    <ListGroupItem>
+                                        <Media>
+                                        <Media left>
+                                            <Media object src="http://46.101.202.234/static/employees/Julie_Taylor.jpg" alt="{ singlePerson.firstName }" />
+                                        </Media>
+                                        <Media body>
+                                            <Media heading>Amy Jones</Media>
+                                            Office lady {"\n"}
+                                            <span className="tw-handle">@handler</span>
+                                        </Media>
+                                        </Media>
+                                    </ListGroupItem>
+                                    <ListGroupItem>
+                                        { this.state.editable ?
+                                            <>
+                                            <Input placeholder="New title here" />
+                                            <Button color="success" onClick={ this.toggleEditable }>Save changes</Button>
+                                            </>
+                                        : <>
+                                            <CardSubtitle>Subtitle</CardSubtitle>
+                                            <Button color="secondary" onClick={ this.toggleEditable }>Edit title</Button>
+                                            </>
+                                        }
+                                        <CardText>Some quick example text content.</CardText>
+                                    </ListGroupItem>
+                                </ListGroup>
+                            </Col>
+                            <Col></Col>
+                        </Row>
                     </CardBody>
                 </Card>
             </Container>
@@ -76,7 +107,8 @@ const mapStateToProps = (redux_state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateTitle: (employeeId, newTitle) => dispatch(directoryActions.updateTitle(employeeId, newTitle)).then(dispatch(directoryActions.fetchDirectory())),
-        removeTab: () => dispatch({ type: DECREASE_OPEN_TABS })
+        fetchEmployees: () => dispatch(directoryActions.fetchDirectory()),
+        removeTab: () => dispatch({ type: DECREASE_OPEN_TABS }),
     };
 };
 

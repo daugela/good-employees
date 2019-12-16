@@ -2,6 +2,9 @@
   Just few style overrides on top of reactstrap
   Just to follow given design example
 */
+html {
+  overflow-y: scroll!important;
+}
 
 img {
   border-radius: 50%;

@@ -5,6 +5,7 @@ const Header = (props) => {
   return (
     <Navbar color="light" light expand="md" sticky="top">
       <NavbarBrand>{ props.title }</NavbarBrand>
+      
     </Navbar>
   );
 };

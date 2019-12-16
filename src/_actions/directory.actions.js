@@ -13,8 +13,10 @@ function fetchDirectory(){
 
             dispatch({ type: FETCH_EMPLOYEES_START });
 
-            if (res.status === 200) {
+            console.log(res.status);
 
+            if (res.status === 200) {
+                
                 dispatch({ type: FETCH_EMPLOYEES_SUCCESS, data: res.data });
                 return res.data;
 
