@@ -8,7 +8,7 @@ const Search = (props) => {
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>Find people:</InputGroupText>
                 </InputGroupAddon>
-                <Input placeholder="Name, surname, email, title etc.." onChange={ props.filter }/>
+                <Input placeholder="Name, surname, email, title etc.." value={ props.query } onChange={ props.filter }/>
             </InputGroup>
         </div>
     );

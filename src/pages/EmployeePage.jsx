@@ -1,16 +1,16 @@
-import React from "react";
+import React from "react"
 import {
     Container,Card,
     ListGroup, ListGroupItem,
     Media, CardBody,
     Badge, CardText,
     Button, Input, Row, Col
-} from "reactstrap";
-import Header from "../components/Header.jsx";
-import Loader from "../components/Loader.jsx";
+} from "reactstrap"
+import Header from "../components/Header.jsx"
+import Loader from "../components/Loader.jsx"
 import { DECREASE_OPEN_TABS } from "../_constants"
-import { directoryActions } from "../_actions";
-import { connect } from "react-redux";
+import { directoryActions } from "../_actions"
+import { connect } from "react-redux"
 
 class EmployeePage extends React.Component {
 
@@ -18,7 +18,7 @@ class EmployeePage extends React.Component {
         super(props);
 
         this.state = {
-            newTitle: "Some new title",
+            newTitle: "",
             editable: false,
             employee: {},
             loading: true
@@ -33,7 +33,7 @@ class EmployeePage extends React.Component {
         setTimeout(() =>{
             let index = this.props.directory.findIndex(person => person.id === this.props.employeeId);
             this.setState({ employee: this.props.directory[index] }, () => {
-                this.setState({ loading: false });
+                this.setState({ loading: false, newTitle: this.state.employee.title });
             });
         }, 500)
 
@@ -47,6 +47,10 @@ class EmployeePage extends React.Component {
         window.removeEventListener("beforeunload", this.tabClose);
     }
       
+    shouldComponentUpdate() {
+        return true;
+    }
+
     tabClose = event => {
         this.props.removeTab(); // Adjust redux tab count...
         var message = "Tab will be closed now. I hope you saved your work!";
@@ -59,6 +63,22 @@ class EmployeePage extends React.Component {
             editable: !prevState.editable
         }));
         this.props.fetchEmployees(); //Call update from api
+    }
+
+    saveTitle = () => {
+        this.props.updateEmployee(this.state.employee).then(
+            setTimeout(() => {
+                this.props.fetchEmployees();
+            }, 200)
+            
+        );
+        this.toggleEditable();
+    }
+    
+    handleChange = (event) => {
+        let updatedEmployee = JSON.parse(JSON.stringify(this.state.employee));
+        updatedEmployee.title = event.target.value;
+        this.setState({ newTitle: event.target.value, employee: updatedEmployee });
     }
 
     render() {
@@ -86,8 +106,8 @@ class EmployeePage extends React.Component {
                                             
                                                 { this.state.editable ?
                                                 <>
-                                                    <Input placeholder="New title here" /> {"\n"}
-                                                    <Button color="success" size="sm" onClick={ this.toggleEditable }>Save changes</Button>{"\n"}
+                                                    <Input value={ this.state.newTitle } onChange={ this.handleChange } /> {"\n"}
+                                                    <Button color="success" size="sm" onClick={ this.saveTitle }>Save changes</Button>{"\n"}
                                                 </>
                                                 :<>
                                                     <p style={{ marginBottom: "0.9rem" }}>{ this.state.employee.title }</p> {"\n"}
@@ -136,10 +156,10 @@ const mapStateToProps = (redux_state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateTitle: (employeeId, newTitle) => dispatch(directoryActions.updateTitle(employeeId, newTitle)).then(dispatch(directoryActions.fetchDirectory())),
+        updateEmployee: (person) => dispatch(directoryActions.updateEmployee(person)),
         fetchEmployees: () => dispatch(directoryActions.fetchDirectory()),
         removeTab: () => dispatch({ type: DECREASE_OPEN_TABS })
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmployeePage);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeePage)

@@ -1,7 +1,7 @@
 import { AUTH_HEADER } from "../_helpers";
 
 export const directoryServices = {
-    fetchDirectory, updateTitle
+    fetchDirectory, updateEmployee
 };
 
 async function fetchDirectory() {
@@ -21,12 +21,12 @@ async function fetchDirectory() {
     }
 }
 
-async function updateTitle(id, title) {
+async function updateEmployee(updatedEmployee) {
 
     const requestOptions = {
         method: "POST", // POST method invoked
         headers: AUTH_HEADER,
-        body: JSON.stringify({ id: id, title: title })
+        body: JSON.stringify(updatedEmployee)
     };
 
     const res = await fetch(process.env.REACT_APP_EMPLOYEE_API, requestOptions);

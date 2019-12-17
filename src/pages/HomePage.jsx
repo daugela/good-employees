@@ -13,7 +13,8 @@ class HomePage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            filtered: []
+            filtered: [],
+            query: ""
         };
         this.employeeClick = this.employeeClick.bind(this);
         this.filterSearch = this.filterSearch.bind(this);
@@ -42,17 +43,26 @@ class HomePage extends React.Component {
     }
 
     filterSearch = (event) => {
+
         if(!event.target.value || event.target.value === " " || event.target.value === ""){
-            this.setState({ filtered: [...this.props.directory] });
+            this.setState({ filtered: [], query: "" });
+
         }else {
             let match = [];
+            let query = event.target.value.toLowerCase();
             match = this.props.directory.filter(
-                person => person["firstName"].toLowerCase().includes(event.target.value.toLowerCase()) ||
-                    person["title"].toLowerCase().includes(event.target.value.toLowerCase()) ||
-                    person["lastName"].toLowerCase().includes(event.target.value.toLowerCase()) ||
-                    person["email"].toLowerCase().includes(event.target.value.toLowerCase())
+                person => person["firstName"].toLowerCase().includes(query) ||
+                    person["title"].toLowerCase().includes(query) ||
+                    person["lastName"].toLowerCase().includes(query) ||
+                    person["email"].toLowerCase().includes(query)
             );
-            this.setState({ filtered: match });
+
+            let filtered = [];
+            match.forEach((item) => {
+                filtered.push(item.id)
+            });
+
+            this.setState({ filtered, query });
         }
     };
 
@@ -61,14 +71,11 @@ class HomePage extends React.Component {
         if(this.props.loading){
             return <Loader/>
         }
-
         return (
             <Container>
-
                 <Header title="Employee directory"/>
-                <Search filter={ this.filterSearch }/>
-                <EmployeeList employees={ this.state.filtered } handler={ this.employeeClick } />
-
+                <Search filter={ this.filterSearch } query={ this.state.query }/>
+                <EmployeeList employees={ this.props.directory } filter={ this.state.filtered } query={ this.state.query } handler={ this.employeeClick } />
             </Container>
         );
     }
@@ -91,4 +98,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)

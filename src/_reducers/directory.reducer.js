@@ -5,6 +5,7 @@ import {
     FETCH_EMPLOYEES_ERROR,
     INCREASE_OPEN_TABS,
     DECREASE_OPEN_TABS,
+    UPDATE_EMPLOYEE_SUCCESS,
     SELECT_EMPLOYEE } from '../_constants';
 
 const initialState = {
@@ -25,11 +26,19 @@ function directoryReducer(state=initialState, action) {
                 loading: true // Just pass some loader status (might be useful in UI)
             };
 
+        case UPDATE_EMPLOYEE_SUCCESS:
+
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            };
+
         case FETCH_EMPLOYEES_SUCCESS:
 
             //TODO: Check if payload is valid before saving to local storage
             localStorage.setItem(CACHED_DIRECTORY, JSON.stringify(action.data));
-            
+
             return {
                 ...state,
                 loading: false,

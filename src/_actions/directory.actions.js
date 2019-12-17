@@ -1,8 +1,8 @@
 import { directoryServices }  from "../_services";
-import { FETCH_EMPLOYEES_START, FETCH_EMPLOYEES_SUCCESS, FETCH_EMPLOYEES_ERROR } from "../_constants";
+import { FETCH_EMPLOYEES_START, FETCH_EMPLOYEES_SUCCESS, FETCH_EMPLOYEES_ERROR, UPDATE_EMPLOYEE_SUCCESS } from "../_constants";
 
 export const directoryActions = {
-    fetchDirectory, updateTitle
+    fetchDirectory, updateEmployee
 };
 
 function fetchDirectory(){
@@ -27,9 +27,9 @@ function fetchDirectory(){
         })
 }
 
-function updateTitle(id, title){
+function updateEmployee(person){
 
-    return dispatch => directoryServices.updateTitle(id, title)
+    return dispatch => directoryServices.updateEmployee(person)
 
         .then(res => {
 
@@ -38,7 +38,7 @@ function updateTitle(id, title){
             // WARNING! Create (POST) requests return status code 201 !!!
             if (res.status === 201) {
 
-                dispatch({ type: FETCH_EMPLOYEES_SUCCESS, data: res.data });
+                dispatch({ type: UPDATE_EMPLOYEE_SUCCESS, data: res.data });
                 return res.data;
 
             } else {
