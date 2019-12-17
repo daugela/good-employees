@@ -1,12 +1,14 @@
 ## Good employees of the React department
 
 ### What is this
-This is an assigment task to demonstrate some React/Redux features.  
+This is an assigment to demonstrate some React/Redux features 
+
+### Demo url
+http://46.101.202.234:3000/  
 
 ### Requirements
 
 Sample desing suggested  
-
 ![Alt text](requirement.jpg?raw=true "Title")
 
 Use React + Redux for the assignment.
@@ -50,4 +52,4 @@ Feel free to assume and make changes to design if it looks suitable.
 
 
 ### Bonus
-Implement backend (Python/Django)  
+Implemented backend (Python/Django)  
